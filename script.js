@@ -1,6 +1,7 @@
 const chatBox = document.getElementById("chatBox");
 const userInput = document.getElementById("userInput");
 
+// Append a message to the chatbox
 function appendMessage(text, sender) {
     const messageElement = document.createElement("div");
     messageElement.classList.add("message");
@@ -10,6 +11,7 @@ function appendMessage(text, sender) {
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to bottom
 }
 
+// Handle user input and send messages
 async function sendMessage() {
     const message = userInput.value.trim();
     if (message === "") return;
@@ -20,20 +22,20 @@ async function sendMessage() {
     // Clear input field
     userInput.value = "";
 
-    // Get AI response (replace with API integration for real responses)
+    // Get AI response from OpenAI API
     const aiResponse = await getAiResponse(message);
-    
+
     // Display AI response
     appendMessage(aiResponse, "ai");
 }
 
+// Fetch AI response from OpenAI API
 async function getAiResponse(userMessage) {
-    const apiKey = " https://api.openai.com/v1/chat/completions"; // Replace with your actual API key
-
+    const apiKey = "sk-...Tn8A"; // Replace with your actual API key
     const endpoint = "https://api.openai.com/v1/chat/completions";
 
     const payload = {
-        model: "gpt-3.5-turbo", // Model to use (can be updated to a newer model if available)
+        model: "gpt-3.5-turbo", // Model to use
         messages: [{ role: "user", content: userMessage }],
         max_tokens: 100, // Limit the response length
     };
@@ -59,12 +61,4 @@ async function getAiResponse(userMessage) {
         console.error("Network Error:", error);
         return "There was a problem connecting to the AI.";
     }
-}
-    
-    // Simulate AI processing time
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve(simulatedResponses[Math.floor(Math.random() * simulatedResponses.length)]);
-        }, 1000);
-    });
 }
