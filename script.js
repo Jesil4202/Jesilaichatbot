@@ -28,14 +28,38 @@ async function sendMessage() {
 }
 
 async function getAiResponse(userMessage) {
-    // Simulating an AI response (replace with actual AI API or backend)
-    const simulatedResponses = [
-        "Hello! How can I assist you today?",
-        "I'm Jesilai, your virtual assistant!",
-        "That sounds interesting! Tell me more.",
-        "I'm not sure about that. Can you explain further?",
-        "Let me think about that... Okay, I have an answer!"
-    ];
+    const apiKey = " https://api.openai.com/v1/chat/completions"; // Replace with your actual API key
+
+    const endpoint = "https://api.openai.com/v1/chat/completions";
+
+    const payload = {
+        model: "gpt-3.5-turbo", // Model to use (can be updated to a newer model if available)
+        messages: [{ role: "user", content: userMessage }],
+        max_tokens: 100, // Limit the response length
+    };
+
+    try {
+        const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${apiKey}`,
+            },
+            body: JSON.stringify(payload),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return data.choices[0].message.content.trim(); // Return the AI's response
+        } else {
+            console.error("API Error:", response.status, response.statusText);
+            return "Sorry, I couldn't process your request.";
+        }
+    } catch (error) {
+        console.error("Network Error:", error);
+        return "There was a problem connecting to the AI.";
+    }
+}
     
     // Simulate AI processing time
     return new Promise(resolve => {
