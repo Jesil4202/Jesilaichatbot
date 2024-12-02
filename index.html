@@ -8,12 +8,12 @@
 </head>
 <body>
     <div class="chat-container">
-        <div id="chatBox" class="chat-box">
-            <!-- Chat messages will appear here -->
+        <div id="chatBox" class="chat-box" role="log" aria-live="polite">
+            <p>Welcome to Jesilai Chatbot! How can I help you?</p>
         </div>
         <div class="input-container">
-            <input id="userInput" type="text" placeholder="Type your message here">
-            <button onclick="sendMessage()">Send</button>
+            <input id="userInput" type="text" placeholder="Type your message here" aria-label="Message input">
+            <button id="sendButton" aria-label="Send message">Send</button>
         </div>
     </div>
     <script src="script.js"></script>
